@@ -115,6 +115,7 @@
 		A57E15FD23733E9A00A1620B /* MimiTest */ = {
 			isa = PBXGroup;
 			children = (
+				A5CD739C23797F4D00A4557D /* Networking */,
 				A5CD739123797AA400A4557D /* Helper */,
 				A5CD73882379745D00A4557D /* API */,
 				A57E15FE23733E9A00A1620B /* AppDelegate.swift */,
@@ -148,13 +149,10 @@
 		A5CD73882379745D00A4557D /* API */ = {
 			isa = PBXGroup;
 			children = (
-				A5CD73892379747800A4557D /* DataFetching.swift */,
-				A5CD738B2379755300A4557D /* URLSessionFetcher.swift */,
 				A5CD738D237975F300A4557D /* APIFetching.swift */,
 				A5CD738F2379761400A4557D /* APIFetcher.swift */,
 				A5CD739423797AF500A4557D /* Endpoint.swift */,
 				A5CD739623797B2000A4557D /* Song.swift */,
-				A5CD739823797B3200A4557D /* URLType.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -166,6 +164,16 @@
 				A5CD739A23797B7200A4557D /* ArrayExtension.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		A5CD739C23797F4D00A4557D /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				A5CD73892379747800A4557D /* DataFetching.swift */,
+				A5CD738B2379755300A4557D /* URLSessionFetcher.swift */,
+				A5CD739823797B3200A4557D /* URLType.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
