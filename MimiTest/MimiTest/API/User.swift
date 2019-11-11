@@ -9,6 +9,6 @@
 struct User: Identifiable, Codable, Equatable, Hashable {
     let id: String
     let username: String
-    let avatar_url: String
+    let avatarUrl: String
     let permalink: String
 }

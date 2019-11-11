@@ -19,6 +19,7 @@ extension DataFetching {
         fetchData(for: urlType) { result in
             let newResult = result.throwingMap { data -> Type in
                 let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let decoded = try decoder.decode(Type.self,
                                                from: data)
                 return decoded

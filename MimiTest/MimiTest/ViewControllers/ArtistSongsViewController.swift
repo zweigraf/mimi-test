@@ -24,6 +24,13 @@ class ArtistSongsViewController: UIViewController {
     private lazy var ui = TableViewView()
     private let fetcher: APIFetching
     private let user: User
+    private lazy var durationFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.zeroFormattingBehavior = .default
+        return formatter
+    }()
 
     private var tracks: [Song] = [] {
         didSet {
@@ -64,7 +71,7 @@ extension ArtistSongsViewController: UITableViewDataSource {
         }
 
         cell.textLabel?.text = track.title
-//        cell.detailTextLabel?.text = "\(mapping.tracks.count) Tracks"
+        cell.detailTextLabel?.text = "Duration: \( durationFormatter.string(from: track.durationInterval) ?? "0:00:00")"
 
         return cell
     }

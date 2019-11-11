@@ -44,7 +44,10 @@ class TopArtistsViewController: UIViewController {
         ui.tableView.delegate = self
 
         fetcher.fetchTopArtistMapping { result in
-            guard case .success(let value) = result else { return }
+            guard case .success(let value) = result else {
+                print("we have an error \(result)")
+                return
+            }
             DispatchQueue.main.async {
                 self.userWithTracks = value
             }

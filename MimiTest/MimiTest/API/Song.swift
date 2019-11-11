@@ -12,5 +12,12 @@ struct Song: Identifiable, Codable, Equatable, Hashable {
     let id: String
     let user: User
     let title: String
-    let artwork_url: String
+    let artworkUrl: String
+    private let duration: String
+}
+
+extension Song {
+    var durationInterval: TimeInterval {
+        return TimeInterval(duration) ?? 0
+    }
 }
