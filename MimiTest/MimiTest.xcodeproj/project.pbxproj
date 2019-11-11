@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A57E15FF23733E9A00A1620B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E15FE23733E9A00A1620B /* AppDelegate.swift */; };
 		A57E160123733E9A00A1620B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E160023733E9A00A1620B /* SceneDelegate.swift */; };
-		A57E160323733E9A00A1620B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E160223733E9A00A1620B /* ViewController.swift */; };
+		A57E160323733E9A00A1620B /* TopArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E160223733E9A00A1620B /* TopArtistsViewController.swift */; };
 		A57E160823733E9B00A1620B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A57E160723733E9B00A1620B /* Assets.xcassets */; };
 		A57E160B23733E9B00A1620B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A57E160923733E9B00A1620B /* LaunchScreen.storyboard */; };
 		A57E161623733E9B00A1620B /* MimiTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E161523733E9B00A1620B /* MimiTestTests.swift */; };
@@ -26,6 +26,8 @@
 		A5CD739F2379815900A4557D /* TableViewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD739E2379815900A4557D /* TableViewView.swift */; };
 		A5CD73A12379874100A4557D /* UserWithTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD73A02379874100A4557D /* UserWithTracks.swift */; };
 		A5CD73A32379877000A4557D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD73A22379877000A4557D /* User.swift */; };
+		A5CD73A62379898A00A4557D /* ArtistSongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD73A52379898A00A4557D /* ArtistSongsViewController.swift */; };
+		A5CD73A823798B9A00A4557D /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD73A723798B9A00A4557D /* Router.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +51,7 @@
 		A57E15FB23733E9A00A1620B /* MimiTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MimiTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A57E15FE23733E9A00A1620B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A57E160023733E9A00A1620B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A57E160223733E9A00A1620B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A57E160223733E9A00A1620B /* TopArtistsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopArtistsViewController.swift; sourceTree = "<group>"; };
 		A57E160723733E9B00A1620B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A57E160A23733E9B00A1620B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A57E160C23733E9B00A1620B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -71,6 +73,8 @@
 		A5CD739E2379815900A4557D /* TableViewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewView.swift; sourceTree = "<group>"; };
 		A5CD73A02379874100A4557D /* UserWithTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWithTracks.swift; sourceTree = "<group>"; };
 		A5CD73A22379877000A4557D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A5CD73A52379898A00A4557D /* ArtistSongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSongsViewController.swift; sourceTree = "<group>"; };
+		A5CD73A723798B9A00A4557D /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,16 +125,17 @@
 		A57E15FD23733E9A00A1620B /* MimiTest */ = {
 			isa = PBXGroup;
 			children = (
+				A5CD73A42379897800A4557D /* ViewControllers */,
 				A5CD739D2379814B00A4557D /* Views */,
 				A5CD739C23797F4D00A4557D /* Networking */,
 				A5CD739123797AA400A4557D /* Helper */,
 				A5CD73882379745D00A4557D /* API */,
 				A57E15FE23733E9A00A1620B /* AppDelegate.swift */,
 				A57E160023733E9A00A1620B /* SceneDelegate.swift */,
-				A57E160223733E9A00A1620B /* ViewController.swift */,
 				A57E160723733E9B00A1620B /* Assets.xcassets */,
 				A57E160923733E9B00A1620B /* LaunchScreen.storyboard */,
 				A57E160C23733E9B00A1620B /* Info.plist */,
+				A5CD73A723798B9A00A4557D /* Router.swift */,
 			);
 			path = MimiTest;
 			sourceTree = "<group>";
@@ -191,6 +196,15 @@
 				A5CD739E2379815900A4557D /* TableViewView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		A5CD73A42379897800A4557D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A57E160223733E9A00A1620B /* TopArtistsViewController.swift */,
+				A5CD73A52379898A00A4557D /* ArtistSongsViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -327,12 +341,14 @@
 				A5CD738A2379747800A4557D /* DataFetching.swift in Sources */,
 				A5CD738E237975F300A4557D /* APIFetching.swift in Sources */,
 				A5CD739B23797B7200A4557D /* ArrayExtension.swift in Sources */,
-				A57E160323733E9A00A1620B /* ViewController.swift in Sources */,
+				A57E160323733E9A00A1620B /* TopArtistsViewController.swift in Sources */,
 				A5CD739723797B2000A4557D /* Song.swift in Sources */,
 				A5CD739523797AF500A4557D /* Endpoint.swift in Sources */,
 				A57E15FF23733E9A00A1620B /* AppDelegate.swift in Sources */,
 				A5CD73A32379877000A4557D /* User.swift in Sources */,
 				A5CD73A12379874100A4557D /* UserWithTracks.swift in Sources */,
+				A5CD73A823798B9A00A4557D /* Router.swift in Sources */,
+				A5CD73A62379898A00A4557D /* ArtistSongsViewController.swift in Sources */,
 				A5CD739923797B3200A4557D /* URLType.swift in Sources */,
 				A5CD739323797ACA00A4557D /* ResultExtension.swift in Sources */,
 				A5CD73902379761400A4557D /* APIFetcher.swift in Sources */,

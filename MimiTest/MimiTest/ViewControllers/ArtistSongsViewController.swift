@@ -1,17 +1,18 @@
 //
-//  ViewController.swift
+//  ArtistSongsViewController.swift
 //  MimiTest
 //
-//  Created by Luis Reisewitz on 06.11.19.
+//  Created by Luis Reisewitz on 11.11.19.
 //  Copyright © 2019 ZweiGraf. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class ArtistSongsViewController: UIViewController {
     // MARK: Init
-    init(fetcher: APIFetching) {
+    init(user: User, fetcher: APIFetching) {
         self.fetcher = fetcher
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -22,8 +23,9 @@ class ViewController: UIViewController {
     // MARK: Properties
     private lazy var ui = TableViewView()
     private let fetcher: APIFetching
+    private let user: User
 
-    private var userWithTracks: [UserWithTracks] = [] {
+    private var tracks: [Song] = [] {
         didSet {
             ui.tableView.reloadData()
         }
@@ -36,32 +38,33 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Top Artists"
+        title = user.username
 
         ui.tableView.dataSource = self
 
-        fetcher.fetchTopArtistMapping { result in
+        fetcher.fetchSongs(for: user) { result in
+            // TODO: show error
             guard case .success(let value) = result else { return }
             DispatchQueue.main.async {
-                self.userWithTracks = value
+                self.tracks = value
             }
         }
     }
 }
 
 // MARK: - UITableViewDataSource
-extension ViewController: UITableViewDataSource {
+extension ArtistSongsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let identifier = "Cell"
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: identifier)
 
-        guard let mapping = userWithTracks[safe: indexPath.item] else {
+        guard let track = tracks[safe: indexPath.item] else {
             fatalError("cell")
         }
 
-        cell.textLabel?.text = mapping.user.username
-        cell.detailTextLabel?.text = "\(mapping.tracks.count) Tracks"
+        cell.textLabel?.text = track.title
+//        cell.detailTextLabel?.text = "\(mapping.tracks.count) Tracks"
 
         return cell
     }
@@ -71,6 +74,6 @@ extension ViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        userWithTracks.count
+        tracks.count
     }
 }

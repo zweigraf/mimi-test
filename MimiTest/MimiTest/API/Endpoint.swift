@@ -10,6 +10,7 @@ import Foundation
 
 enum Endpoint: URLType {
     case topSongs
+    case artistSongs(User)
 
     var url: URL {
         guard let url = URL(string: urlString) else {
@@ -22,6 +23,8 @@ enum Endpoint: URLType {
         switch self {
         case .topSongs:
             return "https://api-v2.hearthis.at/feed/?type=popular&page=1&count=100"
+        case .artistSongs(let user):
+            return "https://api-v2.hearthis.at/\(user.permalink)/?type=tracks&page=1&count=5"
         }
     }
 }

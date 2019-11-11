@@ -15,4 +15,9 @@ struct APIFetcher: APIFetching {
         dataFetcher.fetchAndDecode(for: Endpoint.topSongs,
                                    completion: completion)
     }
+
+    func fetchSongs(for artist: User, completion: @escaping (Result<[Song], Error>) -> Void) {
+        dataFetcher.fetchAndDecode(for: Endpoint.artistSongs(artist),
+                                   completion: completion)
+    }
 }

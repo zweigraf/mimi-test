@@ -10,6 +10,7 @@ import Foundation
 
 protocol APIFetching {
     func fetchTopSongs(completion: @escaping (Result<[Song], Error>) -> Void)
+    func fetchSongs(for artist: User, completion: @escaping (Result<[Song], Error>) -> Void)
 }
 
 extension APIFetching {

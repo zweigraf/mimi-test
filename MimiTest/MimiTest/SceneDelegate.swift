@@ -12,6 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: Dependencies
     private lazy var dataFetcher = URLSessionFetcher()
     private lazy var apiFetcher = APIFetcher(dataFetcher: dataFetcher)
+    private lazy var router = Router()
 
     // MARK: Setup
     var window: UIWindow?
@@ -24,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
 
-        let mainViewController = ViewController(fetcher: apiFetcher)
+        let mainViewController = TopArtistsViewController(fetcher: apiFetcher, router: router)
         let navigationController = UINavigationController(rootViewController: mainViewController)
 
         window?.rootViewController = navigationController
@@ -58,7 +59,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-
