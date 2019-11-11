@@ -21,7 +21,7 @@ enum Endpoint: URLType {
     private var urlString: String {
         switch self {
         case .topSongs:
-            return "https://api-v2.hearthis.at/feed/?type=popular&page=1&count=5"
+            return "https://api-v2.hearthis.at/feed/?type=popular&page=1&count=100"
         }
     }
 }

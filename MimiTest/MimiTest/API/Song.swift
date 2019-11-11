@@ -8,12 +8,7 @@
 
 import Foundation
 
-struct Song: Identifiable, Codable {
-    struct User: Identifiable, Codable {
-        let id: String
-        let username: String
-        let avatar_url: String
-    }
+struct Song: Identifiable, Codable, Equatable, Hashable {
     let id: String
     let user: User
     let title: String

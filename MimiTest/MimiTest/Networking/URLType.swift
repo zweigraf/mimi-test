@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Describes a type that has URL information attached.
 protocol URLType {
     var url: URL { get }
 }

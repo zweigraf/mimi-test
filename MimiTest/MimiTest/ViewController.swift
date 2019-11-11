@@ -9,47 +9,59 @@
 import UIKit
 
 class ViewController: UIViewController {
-    private lazy var ui = ViewControllerView()
+    // MARK: Init
+    init(fetcher: APIFetching) {
+        self.fetcher = fetcher
+        super.init(nibName: nil, bundle: nil)
+    }
 
-    private var songs: [Song] = [] {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Properties
+    private lazy var ui = TableViewView()
+    private let fetcher: APIFetching
+
+    private var userWithTracks: [UserWithTracks] = [] {
         didSet {
             ui.tableView.reloadData()
         }
     }
+
+    // MARK: UIViewController Overrides
     override func loadView() {
         view = ui
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Top Songs"
+        title = "Top Artists"
 
         ui.tableView.dataSource = self
 
-        let dataFetcher = URLSessionFetcher()
-        let fetcher = APIFetcher(dataFetcher: dataFetcher)
-        fetcher.fetchTopSongs { result in
-            guard case .success(let songs) = result else { return }
+        fetcher.fetchTopArtistMapping { result in
+            guard case .success(let value) = result else { return }
             DispatchQueue.main.async {
-                self.songs = songs
+                self.userWithTracks = value
             }
-            print(songs)
         }
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let identifier = "Cell"
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: identifier)
 
-        guard let song = songs[safe: indexPath.item] else {
+        guard let mapping = userWithTracks[safe: indexPath.item] else {
             fatalError("cell")
         }
 
-        cell.textLabel?.text = song.title
-        cell.detailTextLabel?.text = song.user.username
+        cell.textLabel?.text = mapping.user.username
+        cell.detailTextLabel?.text = "\(mapping.tracks.count) Tracks"
 
         return cell
     }
@@ -59,28 +71,6 @@ extension ViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        songs.count
-    }
-}
-
-private class ViewControllerView: UIView {
-    let tableView = UITableView()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-
-        addSubview(tableView)
-        NSLayoutConstraint.activate(
-            [tableView.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 1),
-             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-             tableView.bottomAnchor.constraint(equalToSystemSpacingBelow: bottomAnchor, multiplier: 1)
-        ])
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("No storyboards here")
+        userWithTracks.count
     }
 }

@@ -9,9 +9,12 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    // MARK: Dependencies
+    private lazy var dataFetcher = URLSessionFetcher()
+    private lazy var apiFetcher = APIFetcher(dataFetcher: dataFetcher)
 
+    // MARK: Setup
     var window: UIWindow?
-
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -20,7 +23,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let navigationController = UINavigationController(rootViewController: ViewController())
+
+        let mainViewController = ViewController(fetcher: apiFetcher)
+        let navigationController = UINavigationController(rootViewController: mainViewController)
+
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
