@@ -10,9 +10,10 @@ import UIKit
 
 class TopArtistsViewController: UIViewController {
     // MARK: Init
-    init(fetcher: APIFetching, router: Routing) {
+    init(fetcher: APIFetching, router: Routing, imageLoader: ImageLoader) {
         self.fetcher = fetcher
         self.router = router
+        self.imageLoader = imageLoader
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -24,6 +25,7 @@ class TopArtistsViewController: UIViewController {
     private lazy var ui = TableViewView()
     private let fetcher: APIFetching
     private let router: Routing
+    private let imageLoader: ImageLoader
 
     private var userWithTracks: [UserWithTracks] = [] {
         didSet {
@@ -40,14 +42,17 @@ class TopArtistsViewController: UIViewController {
         super.viewDidLoad()
         title = "Top Artists"
 
+        // Configure tableview
         ui.tableView.dataSource = self
         ui.tableView.delegate = self
+        ui.tableView.rowHeight = UITableView.automaticDimension
+    
         // TODO: dedup identifier
-        ui.tableView.register(TableViewCell.self, forCellReuseIdentifier: "Cell")
+        ui.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
 
         fetcher.fetchTopArtistMapping { result in
             guard case .success(let value) = result else {
-                print("we have an error \(result)")
+                // TODO: error handling
                 return
             }
             DispatchQueue.main.async {
@@ -61,16 +66,17 @@ class TopArtistsViewController: UIViewController {
 extension TopArtistsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let identifier = "Cell"
+        let identifier = TableViewCell.reuseIdentifier
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TableViewCell ?? TableViewCell(style: .subtitle, reuseIdentifier: identifier)
 
 
+        // TODO: bla
         guard let mapping = userWithTracks[safe: indexPath.item] else {
             fatalError("cell")
         }
 
         let viewModel = ArtistTrackMappingViewModel(artistMapping: mapping)
-        cell.configure(with: viewModel)
+        cell.configure(with: viewModel, imageLoader: imageLoader)
 
         return cell
     }
@@ -87,6 +93,7 @@ extension TopArtistsViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension TopArtistsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: bla
         guard let mapping = userWithTracks[safe: indexPath.item] else {
             fatalError("cell")
         }

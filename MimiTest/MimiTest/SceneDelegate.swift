@@ -8,11 +8,13 @@
 
 import UIKit
 
+// TODO: playerservice, interactor, button on top that goes to player
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: Dependencies
     private lazy var dataFetcher = URLSessionFetcher()
     private lazy var apiFetcher = APIFetcher(dataFetcher: dataFetcher)
-    private lazy var router = Router(fetcher: apiFetcher)
+    private lazy var imageLoader = ImageLoader(fetcher: dataFetcher)
+    private lazy var router = Router(fetcher: apiFetcher, imageLoader: imageLoader)
 
     // MARK: Setup
     var window: UIWindow?

@@ -10,9 +10,10 @@ import UIKit
 
 class ArtistSongsViewController: UIViewController {
     // MARK: Init
-    init(user: User, fetcher: APIFetching) {
+    init(user: User, fetcher: APIFetching, imageLoader: ImageLoader) {
         self.fetcher = fetcher
         self.user = user
+        self.imageLoader = imageLoader
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -23,6 +24,7 @@ class ArtistSongsViewController: UIViewController {
     // MARK: Properties
     private lazy var ui = TableViewView()
     private let fetcher: APIFetching
+    private let imageLoader: ImageLoader
     private let user: User
 
     private var tracks: [Song] = [] {
@@ -40,8 +42,10 @@ class ArtistSongsViewController: UIViewController {
         super.viewDidLoad()
         title = user.username
 
+        // Configure tableView
         ui.tableView.dataSource = self
-        ui.tableView.register(TableViewCell.self, forCellReuseIdentifier: "Cell")
+        ui.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
+        ui.tableView.rowHeight = UITableView.automaticDimension
 
         fetcher.fetchSongs(for: user) { result in
             // TODO: show error
@@ -57,7 +61,7 @@ class ArtistSongsViewController: UIViewController {
 extension ArtistSongsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let identifier = "Cell"
+        let identifier = TableViewCell.reuseIdentifier
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TableViewCell ?? TableViewCell(style: .subtitle, reuseIdentifier: identifier)
 
         guard let track = tracks[safe: indexPath.item] else {
@@ -67,7 +71,7 @@ extension ArtistSongsViewController: UITableViewDataSource {
         // TODO: make better with interactor
 
         let viewModel = TrackViewModel(track: track)
-        cell.configure(with: viewModel)
+        cell.configure(with: viewModel, imageLoader: imageLoader)
 
         return cell
     }

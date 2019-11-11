@@ -12,3 +12,8 @@ import Foundation
 protocol URLType {
     var url: URL { get }
 }
+
+// MARK: - Conform URL to URLType
+extension URL: URLType {
+    var url: URL { self }
+}
