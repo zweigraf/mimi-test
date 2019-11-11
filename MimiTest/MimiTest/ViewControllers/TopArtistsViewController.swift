@@ -10,8 +10,8 @@ import UIKit
 
 class TopArtistsViewController: UIViewController {
     // MARK: Init
-    init(fetcher: APIFetching, router: Routing, imageLoader: ImageLoader) {
-        self.fetcher = fetcher
+    init(interactor: TopArtistsInteracting, router: Routing, imageLoader: ImageLoader) {
+        self.interactor = interactor
         self.router = router
         self.imageLoader = imageLoader
         super.init(nibName: nil, bundle: nil)
@@ -23,15 +23,9 @@ class TopArtistsViewController: UIViewController {
 
     // MARK: Properties
     private lazy var ui = TableViewView()
-    private let fetcher: APIFetching
+    private let interactor: TopArtistsInteracting
     private let router: Routing
     private let imageLoader: ImageLoader
-
-    private var userWithTracks: [UserWithTracks] = [] {
-        didSet {
-            ui.tableView.reloadData()
-        }
-    }
 
     // MARK: UIViewController Overrides
     override func loadView() {
@@ -40,25 +34,17 @@ class TopArtistsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Top Artists"
+        title = interactor.title
+
+        interactor.delegate = self
+        interactor.viewDidLoad()
 
         // Configure tableview
         ui.tableView.dataSource = self
         ui.tableView.delegate = self
         ui.tableView.rowHeight = UITableView.automaticDimension
     
-        // TODO: dedup identifier
         ui.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
-
-        fetcher.fetchTopArtistMapping { result in
-            guard case .success(let value) = result else {
-                // TODO: error handling
-                return
-            }
-            DispatchQueue.main.async {
-                self.userWithTracks = value
-            }
-        }
     }
 }
 
@@ -69,36 +55,43 @@ extension TopArtistsViewController: UITableViewDataSource {
         let identifier = TableViewCell.reuseIdentifier
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TableViewCell ?? TableViewCell(style: .subtitle, reuseIdentifier: identifier)
 
-
-        // TODO: bla
-        guard let mapping = userWithTracks[safe: indexPath.item] else {
-            fatalError("cell")
-        }
-
-        let viewModel = ArtistTrackMappingViewModel(artistMapping: mapping)
+        let viewModel = interactor.tableView(viewModelForRowAt: indexPath)
         cell.configure(with: viewModel, imageLoader: imageLoader)
 
         return cell
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        interactor.numberOfSections()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        userWithTracks.count
+        interactor.tableView(numberOfRowsInSection: section)
     }
 }
 
 // MARK: - UITableViewDelegate
 extension TopArtistsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: bla
-        guard let mapping = userWithTracks[safe: indexPath.item] else {
-            fatalError("cell")
-        }
+        interactor.tableView(didSelectRowAt: indexPath)
+    }
+}
 
-        let user = mapping.user
-        router.presentSongs(for: user, on: self)
+// MARK: - TableViewInteractingDelegate
+extension TopArtistsViewController: TopArtistsInteractingDelegate {
+    func didUpdateData() {
+        DispatchQueue.main.async {
+            self.ui.tableView.reloadData()
+        }
+    }
+
+    func didEncounterError(error: Error) {
+        DispatchQueue.main.async {
+            self.router.presentErrorAlert(for: error, on: self)
+        }
+    }
+
+    func presentSongs(for artist: User) {
+        router.presentSongs(for: artist, on: self)
     }
 }

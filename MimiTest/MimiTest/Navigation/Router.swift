@@ -14,17 +14,29 @@ struct Router: Routing {
     let imageLoader: ImageLoader
 
     func presentSongs(for artist: User, on viewController: UIViewController) {
-        let songsViewController = ArtistSongsViewController(user: artist, fetcher: fetcher, imageLoader: imageLoader)
+        let interactor = ArtistSongsInteractor(user: artist, fetcher: fetcher)
+        let songsViewController = ArtistSongsViewController(interactor: interactor,
+                                                            router: self,
+                                                            imageLoader: imageLoader)
         viewController.navigationController?.pushViewController(songsViewController, animated: true)
     }
 
     func presentTopArtists(on window: UIWindow) {
-        let mainViewController = TopArtistsViewController(fetcher: fetcher, router: self, imageLoader: imageLoader)
+        let interactor = TopArtistsInteractor(fetcher: fetcher)
+        let mainViewController = TopArtistsViewController(interactor: interactor,
+                                                          router: self,
+                                                          imageLoader: imageLoader)
         let navigationController = UINavigationController(rootViewController: mainViewController)
         window.rootViewController = navigationController
     }
 
-    func presentPlayer(on viewController: UIViewController) {
-        
+    func presentErrorAlert(for error: Error, on viewController: UIViewController) {
+        let controller = UIAlertController(title: "Oops",
+                                           message: error.localizedDescription,
+                                           preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in
+            controller.dismiss(animated: true)
+        }))
+        viewController.present(controller, animated: true)
     }
 }

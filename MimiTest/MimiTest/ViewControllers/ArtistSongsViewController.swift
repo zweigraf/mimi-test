@@ -10,9 +10,9 @@ import UIKit
 
 class ArtistSongsViewController: UIViewController {
     // MARK: Init
-    init(user: User, fetcher: APIFetching, imageLoader: ImageLoader) {
-        self.fetcher = fetcher
-        self.user = user
+    init(interactor: ArtistSongsInteracting, router: Routing, imageLoader: ImageLoader) {
+        self.interactor = interactor
+        self.router = router
         self.imageLoader = imageLoader
         super.init(nibName: nil, bundle: nil)
     }
@@ -23,15 +23,9 @@ class ArtistSongsViewController: UIViewController {
 
     // MARK: Properties
     private lazy var ui = TableViewView()
-    private let fetcher: APIFetching
+    private let interactor: ArtistSongsInteracting
+    private let router: Routing
     private let imageLoader: ImageLoader
-    private let user: User
-
-    private var tracks: [Song] = [] {
-        didSet {
-            ui.tableView.reloadData()
-        }
-    }
 
     // MARK: UIViewController Overrides
     override func loadView() {
@@ -40,20 +34,15 @@ class ArtistSongsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = user.username
+        title = interactor.title
+
+        interactor.delegate = self
+        interactor.viewDidLoad()
 
         // Configure tableView
         ui.tableView.dataSource = self
         ui.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
         ui.tableView.rowHeight = UITableView.automaticDimension
-
-        fetcher.fetchSongs(for: user) { result in
-            // TODO: show error
-            guard case .success(let value) = result else { return }
-            DispatchQueue.main.async {
-                self.tracks = value
-            }
-        }
     }
 }
 
@@ -64,23 +53,36 @@ extension ArtistSongsViewController: UITableViewDataSource {
         let identifier = TableViewCell.reuseIdentifier
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TableViewCell ?? TableViewCell(style: .subtitle, reuseIdentifier: identifier)
 
-        guard let track = tracks[safe: indexPath.item] else {
-            fatalError("cell")
-        }
-
-        // TODO: make better with interactor
-
-        let viewModel = TrackViewModel(track: track)
+        let viewModel = interactor.tableView(viewModelForRowAt: indexPath)
         cell.configure(with: viewModel, imageLoader: imageLoader)
 
         return cell
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        interactor.numberOfSections()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        tracks.count
+        interactor.tableView(numberOfRowsInSection: section)
+    }
+}
+
+// MARK: - TableViewInteractingDelegate
+extension ArtistSongsViewController: ArtistSongsInteractingDelegate {
+    func didUpdateData() {
+        DispatchQueue.main.async {
+            self.ui.tableView.reloadData()
+        }
+    }
+
+    func didEncounterError(error: Error) {
+        DispatchQueue.main.async {
+            self.router.presentErrorAlert(for: error, on: self)
+        }
+    }
+
+    func present(song: Song) {
+//        router.prese
     }
 }
