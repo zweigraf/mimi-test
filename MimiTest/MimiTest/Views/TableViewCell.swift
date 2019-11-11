@@ -48,10 +48,13 @@ class TableViewCell: UITableViewCell {
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.setContentHuggingPriority(.required, for: .vertical)
+        titleLabel.adjustsFontSizeToFitWidth = true
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.setContentHuggingPriority(.required, for: .vertical)
+        subtitleLabel.adjustsFontSizeToFitWidth = true
         detailImageView.translatesAutoresizingMaskIntoConstraints = false
 
+        let defaultMargin: CGFloat = 8.0
         NSLayoutConstraint.activate([
             detailImageView.leadingAnchor.constraint(equalToSystemSpacingAfter: safeAreaLayoutGuide.leadingAnchor, multiplier: 1),
             detailImageView.heightAnchor.constraint(equalTo: safeAreaLayoutGuide.heightAnchor),
@@ -59,13 +62,13 @@ class TableViewCell: UITableViewCell {
             detailImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
 
             titleLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: detailImageView.trailingAnchor, multiplier: 1),
-            titleLabel.topAnchor.constraint(equalToSystemSpacingBelow: safeAreaLayoutGuide.topAnchor, multiplier: 1),
-            titleLabel.trailingAnchor.constraint(equalToSystemSpacingAfter: safeAreaLayoutGuide.trailingAnchor, multiplier: 1),
+            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: defaultMargin),
+            titleLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -1 * defaultMargin),
 
             subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             subtitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            subtitleLabel.topAnchor.constraint(equalToSystemSpacingBelow: titleLabel.bottomAnchor, multiplier: 1),
-            subtitleLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8)
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: defaultMargin / 2),
+            subtitleLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -1 * defaultMargin)
         ])
     }
 
