@@ -42,6 +42,8 @@ class TopArtistsViewController: UIViewController {
 
         ui.tableView.dataSource = self
         ui.tableView.delegate = self
+        // TODO: dedup identifier
+        ui.tableView.register(TableViewCell.self, forCellReuseIdentifier: "Cell")
 
         fetcher.fetchTopArtistMapping { result in
             guard case .success(let value) = result else {
@@ -60,14 +62,15 @@ extension TopArtistsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let identifier = "Cell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: identifier)
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TableViewCell ?? TableViewCell(style: .subtitle, reuseIdentifier: identifier)
+
 
         guard let mapping = userWithTracks[safe: indexPath.item] else {
             fatalError("cell")
         }
 
-        cell.textLabel?.text = mapping.user.username
-        cell.detailTextLabel?.text = "\(mapping.tracks.count) Tracks"
+        let viewModel = ArtistTrackMappingViewModel(artistMapping: mapping)
+        cell.configure(with: viewModel)
 
         return cell
     }
@@ -89,6 +92,6 @@ extension TopArtistsViewController: UITableViewDelegate {
         }
 
         let user = mapping.user
-        router.presentSongs(for: user, fetcher: fetcher, on: self)
+        router.presentSongs(for: user, on: self)
     }
 }

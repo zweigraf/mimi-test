@@ -12,7 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: Dependencies
     private lazy var dataFetcher = URLSessionFetcher()
     private lazy var apiFetcher = APIFetcher(dataFetcher: dataFetcher)
-    private lazy var router = Router()
+    private lazy var router = Router(fetcher: apiFetcher)
 
     // MARK: Setup
     var window: UIWindow?
@@ -22,14 +22,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-        window?.windowScene = windowScene
+        let window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        self.window = window
+        window.windowScene = windowScene
 
-        let mainViewController = TopArtistsViewController(fetcher: apiFetcher, router: router)
-        let navigationController = UINavigationController(rootViewController: mainViewController)
-
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
+        // Initialize window with first screen
+        router.presentTopArtists(on: window)
+        window.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

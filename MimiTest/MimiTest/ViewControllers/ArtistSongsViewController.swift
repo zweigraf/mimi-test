@@ -24,13 +24,6 @@ class ArtistSongsViewController: UIViewController {
     private lazy var ui = TableViewView()
     private let fetcher: APIFetching
     private let user: User
-    private lazy var durationFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .positional
-        formatter.allowedUnits = [.hour, .minute, .second]
-        formatter.zeroFormattingBehavior = .default
-        return formatter
-    }()
 
     private var tracks: [Song] = [] {
         didSet {
@@ -48,6 +41,7 @@ class ArtistSongsViewController: UIViewController {
         title = user.username
 
         ui.tableView.dataSource = self
+        ui.tableView.register(TableViewCell.self, forCellReuseIdentifier: "Cell")
 
         fetcher.fetchSongs(for: user) { result in
             // TODO: show error
@@ -64,14 +58,16 @@ extension ArtistSongsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let identifier = "Cell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: identifier)
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TableViewCell ?? TableViewCell(style: .subtitle, reuseIdentifier: identifier)
 
         guard let track = tracks[safe: indexPath.item] else {
             fatalError("cell")
         }
 
-        cell.textLabel?.text = track.title
-        cell.detailTextLabel?.text = "Duration: \( durationFormatter.string(from: track.durationInterval) ?? "0:00:00")"
+        // TODO: make better with interactor
+
+        let viewModel = TrackViewModel(track: track)
+        cell.configure(with: viewModel)
 
         return cell
     }
