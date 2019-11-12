@@ -41,6 +41,7 @@ class ArtistSongsViewController: UIViewController {
 
         // Configure tableView
         ui.tableView.dataSource = self
+        ui.tableView.delegate = self
         ui.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
         ui.tableView.rowHeight = UITableView.automaticDimension
     }
@@ -68,6 +69,13 @@ extension ArtistSongsViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
+extension ArtistSongsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        interactor.tableView(didSelectRowAt: indexPath)
+    }
+}
+
 // MARK: - TableViewInteractingDelegate
 extension ArtistSongsViewController: ArtistSongsInteractingDelegate {
     func didUpdateData() {
@@ -83,6 +91,6 @@ extension ArtistSongsViewController: ArtistSongsInteractingDelegate {
     }
 
     func present(song: Song) {
-//        router.prese
+        router.presentPlayer(for: song, on: self)
     }
 }

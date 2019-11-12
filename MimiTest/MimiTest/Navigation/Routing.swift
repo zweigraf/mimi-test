@@ -12,4 +12,5 @@ protocol Routing {
     func presentTopArtists(on window: UIWindow)
     func presentSongs(for artist: User, on viewController: UIViewController)
     func presentErrorAlert(for error: Error, on viewController: UIViewController)
+    func presentPlayer(for song: Song, on viewController: UIViewController)
 }

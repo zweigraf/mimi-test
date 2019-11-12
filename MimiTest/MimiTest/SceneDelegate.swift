@@ -14,7 +14,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private lazy var dataFetcher = URLSessionFetcher()
     private lazy var apiFetcher = APIFetcher(dataFetcher: dataFetcher)
     private lazy var imageLoader = ImageLoader(fetcher: dataFetcher)
-    private lazy var router = Router(fetcher: apiFetcher, imageLoader: imageLoader)
+    private lazy var playerService = PlayerService()
+    private lazy var router = Router(fetcher: apiFetcher,
+                                     imageLoader: imageLoader,
+                                     playerService: playerService)
 
     // MARK: Setup
     var window: UIWindow?

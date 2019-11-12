@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import AVKit
 
 struct Router: Routing {
     /// API Fetcher used for passing into components that need it.
     let fetcher: APIFetching
     let imageLoader: ImageLoader
+    let playerService: PlayerService
 
     func presentSongs(for artist: User, on viewController: UIViewController) {
         let interactor = ArtistSongsInteractor(user: artist, fetcher: fetcher)
@@ -22,6 +24,8 @@ struct Router: Routing {
     }
 
     func presentTopArtists(on window: UIWindow) {
+        AVPlayerViewController().player = AVPlayer()
+
         let interactor = TopArtistsInteractor(fetcher: fetcher)
         let mainViewController = TopArtistsViewController(interactor: interactor,
                                                           router: self,
@@ -38,5 +42,14 @@ struct Router: Routing {
             controller.dismiss(animated: true)
         }))
         viewController.present(controller, animated: true)
+    }
+
+    func presentPlayer(for song: Song, on viewController: UIViewController) {
+        playerService.configure(with: song)
+        let playerController = AVPlayerViewController()
+        playerController.player = playerService.player
+        viewController.present(playerController, animated: true) {
+            playerController.player?.play()
+        }
     }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A539B9372379D61C008B2762 /* TopArtistsInteracting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A539B9362379D61C008B2762 /* TopArtistsInteracting.swift */; };
+		A539B9392379DA5D008B2762 /* PlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A539B9382379DA5D008B2762 /* PlayerService.swift */; };
 		A57E15FF23733E9A00A1620B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E15FE23733E9A00A1620B /* AppDelegate.swift */; };
 		A57E160123733E9A00A1620B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E160023733E9A00A1620B /* SceneDelegate.swift */; };
 		A57E160323733E9A00A1620B /* TopArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E160223733E9A00A1620B /* TopArtistsViewController.swift */; };
@@ -59,6 +60,7 @@
 
 /* Begin PBXFileReference section */
 		A539B9362379D61C008B2762 /* TopArtistsInteracting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopArtistsInteracting.swift; sourceTree = "<group>"; };
+		A539B9382379DA5D008B2762 /* PlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerService.swift; sourceTree = "<group>"; };
 		A57E15FB23733E9A00A1620B /* MimiTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MimiTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A57E15FE23733E9A00A1620B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A57E160023733E9A00A1620B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				A57E160723733E9B00A1620B /* Assets.xcassets */,
 				A57E160923733E9B00A1620B /* LaunchScreen.storyboard */,
 				A57E160C23733E9B00A1620B /* Info.plist */,
+				A539B9382379DA5D008B2762 /* PlayerService.swift */,
 			);
 			path = MimiTest;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				A5CD738E237975F300A4557D /* APIFetching.swift in Sources */,
 				A5CD739B23797B7200A4557D /* ArrayExtension.swift in Sources */,
 				A5CD73AD2379A78200A4557D /* TableViewCell.swift in Sources */,
+				A539B9392379DA5D008B2762 /* PlayerService.swift in Sources */,
 				A57E160323733E9A00A1620B /* TopArtistsViewController.swift in Sources */,
 				A5CD739723797B2000A4557D /* Song.swift in Sources */,
 				A5CD739523797AF500A4557D /* Endpoint.swift in Sources */,

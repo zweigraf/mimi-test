@@ -13,6 +13,7 @@ struct Song: Identifiable, Codable, Equatable, Hashable {
     let user: User
     let title: String
     let artworkUrl: String
+    let streamUrl: String
     private let duration: String
 }
 
