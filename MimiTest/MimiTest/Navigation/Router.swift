@@ -24,8 +24,6 @@ struct Router: Routing {
     }
 
     func presentTopArtists(on window: UIWindow) {
-        AVPlayerViewController().player = AVPlayer()
-
         let interactor = TopArtistsInteractor(fetcher: fetcher)
         let mainViewController = TopArtistsViewController(interactor: interactor,
                                                           router: self,

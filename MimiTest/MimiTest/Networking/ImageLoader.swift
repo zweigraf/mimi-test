@@ -42,7 +42,6 @@ extension ImageLoader {
                     self.map[view] == url else { return }
 
                 view.image = image
-                view.sizeToFit()
 
                 // Clear out the map for the next request
                 self.map[view] = nil
