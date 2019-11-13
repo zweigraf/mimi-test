@@ -22,20 +22,23 @@ extension ArtistTrackMappingViewModel: TableViewCellViewModel {
     }
 
     var subtitle: AnyPublisher<String?, Never> {
-        // This does not work nicely with localization. For proper
-        // localization, this logic should be encoded for different languages.
-        let count = artistMapping.tracks.count
-        let returnValue: String
-        if count == 1 {
-            returnValue = "1 Track"
-        } else {
-            returnValue = "\(count) Tracks"
-        }
-        return Just(returnValue)
+        apiFetcher.fetchFullArtist(for: artistMapping.user)
+            .map { format(trackCount: $0.trackCount) }
+            .catch { _ in Just(nil) }
             .eraseToAnyPublisher()
     }
 
     var imageUrl: URL? {
         return URL(string: artistMapping.user.avatarUrl)
+    }
+}
+
+private func format(trackCount: Int) -> String {
+    // This does not work nicely with localization. For proper
+    // localization, this logic should be encoded for different languages.
+    if trackCount == 1 {
+        return "1 Track"
+    } else {
+        return "\(trackCount) Tracks"
     }
 }
