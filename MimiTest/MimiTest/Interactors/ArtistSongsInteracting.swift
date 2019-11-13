@@ -6,6 +6,7 @@
 //  Copyright © 2019 ZweiGraf. All rights reserved.
 //
 
+import Combine
 import Foundation
 
 protocol ArtistSongsInteracting: TableViewInteracting {
@@ -20,6 +21,7 @@ class ArtistSongsInteractor: ArtistSongsInteracting {
     private let fetcher: APIFetching
     private let user: ShortArtist
     private var tracks: [Song] = []
+    private var disposeBag = Set<AnyCancellable>()
 
     init(user: ShortArtist, fetcher: APIFetching) {
         self.fetcher = fetcher
@@ -28,15 +30,17 @@ class ArtistSongsInteractor: ArtistSongsInteracting {
 
     // MARK: ArtistSongsInteracting
     func viewDidLoad() {
-        fetcher.fetchSongs(for: user) { result in
-            switch result {
-            case .success(let songs):
+        fetcher.fetchSongs(for: user)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    self.delegate?.didEncounterError(error: error)
+                }
+            }, receiveValue: { (songs) in
                 self.tracks = songs
                 self.delegate?.didUpdateData()
-            case .failure(let error):
-                self.delegate?.didEncounterError(error: error)
-            }
-        }
+            })
+            .store(in: &disposeBag)
     }
 
     var title: String {

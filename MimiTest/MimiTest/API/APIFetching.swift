@@ -6,20 +6,20 @@
 //  Copyright © 2019 ZweiGraf. All rights reserved.
 //
 
+import Combine
 import Foundation
 
 protocol APIFetching {
-    func fetchTopSongs(completion: @escaping (Result<[Song], Error>) -> Void)
-    func fetchSongs(for artist: ShortArtist, completion: @escaping (Result<[Song], Error>) -> Void)
-    func fetchFullArtist(for artist: ShortArtist, completion: @escaping (Result<FullArtist, Error>) -> Void)
+    func fetchTopSongs() -> AnyPublisher<[Song], Error>
+    func fetchSongs(for artist: ShortArtist) -> AnyPublisher<[Song], Error>
+    func fetchFullArtist(for artist: ShortArtist) -> AnyPublisher<FullArtist, Error>
 }
 
 extension APIFetching {
-    func fetchTopArtistMapping(completion: @escaping (Result<[UserWithTracks], Error>) -> Void) {
-        fetchTopSongs { result in
-            let sortedMappingsResult = result.map { map(songs: $0) }
-            completion(sortedMappingsResult)
-        }
+    func fetchTopArtistMapping() -> AnyPublisher<[UserWithTracks], Error> {
+        fetchTopSongs()
+            .map { map(songs: $0) }
+            .eraseToAnyPublisher()
     }
 }
 

@@ -27,7 +27,7 @@ class TableViewCell: UITableViewCell {
         titleLabel.text = nil
         subtitleLabel.text = nil
         detailImageView.image = nil
-        lastLoader?.cancelSetImage(for: detailImageView)
+        lastImageCancelleable?.cancel()
         // Cancel all cancellables
         disposeBag = Set<AnyCancellable>()
     }
@@ -79,7 +79,7 @@ class TableViewCell: UITableViewCell {
     // MARK: Custom Configuration
 
     /// ImageLoader used for loading and cancelling setting image from url.
-    private var lastLoader: ImageLoader?
+    private var lastImageCancelleable: AnyCancellable?
     private var disposeBag = Set<AnyCancellable>()
 
     func configure(with viewModel: TableViewCellViewModel,
@@ -94,11 +94,11 @@ class TableViewCell: UITableViewCell {
             .store(in: &disposeBag)
         detailImageView.image = nil
 
-        // Load and set url if needed
-        lastLoader = imageLoader
-
-        guard let loader = imageLoader,
-            let url = viewModel.imageUrl else { return }
-        loader.setImage(for: detailImageView, from: url)
+        guard let url = viewModel.imageUrl else { return }
+        lastImageCancelleable = imageLoader?.image(from: url)
+            .receive(on: DispatchQueue.main)
+            .map { Optional($0) }
+            .replaceError(with: nil)
+            .assign(to: \.image, on: detailImageView)
     }
 }

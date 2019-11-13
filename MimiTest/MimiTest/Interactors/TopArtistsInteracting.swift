@@ -6,6 +6,7 @@
 //  Copyright © 2019 ZweiGraf. All rights reserved.
 //
 
+import Combine
 import Foundation
 
 protocol TopArtistsInteracting: TableViewInteracting {
@@ -20,6 +21,7 @@ class TopArtistsInteractor: TopArtistsInteracting {
     // MARK: Configuration
     private let fetcher: APIFetching
     private var userWithTracks: [UserWithTracks] = []
+    private var disposeBag = Set<AnyCancellable>()
 
     init(fetcher: APIFetching) {
         self.fetcher = fetcher
@@ -33,15 +35,16 @@ class TopArtistsInteractor: TopArtistsInteracting {
     }
 
     func viewDidLoad() {
-        fetcher.fetchTopArtistMapping { result in
-           switch result {
-            case .success(let mappings):
+        fetcher.fetchTopArtistMapping()
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    self.delegate?.didEncounterError(error: error)
+                }
+            }, receiveValue: { mappings in
                 self.userWithTracks = mappings
                 self.delegate?.didUpdateData()
-            case .failure(let error):
-                self.delegate?.didEncounterError(error: error)
-            }
-        }
+            })
+            .store(in: &disposeBag)
     }
 
     // MARK: TableView Data Source
@@ -58,7 +61,8 @@ class TopArtistsInteractor: TopArtistsInteracting {
             // We should have better error handling here
             fatalError("Request for non existing mapping")
         }
-        return ArtistTrackMappingViewModel(artistMapping: mapping)
+        return ArtistTrackMappingViewModel(artistMapping: mapping,
+                                           apiFetcher: fetcher)
     }
 
     // MARK: TableView Delegate
