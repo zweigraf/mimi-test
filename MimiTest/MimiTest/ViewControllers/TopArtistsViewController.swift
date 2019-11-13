@@ -91,7 +91,7 @@ extension TopArtistsViewController: TopArtistsInteractingDelegate {
         }
     }
 
-    func presentSongs(for artist: User) {
+    func presentSongs(for artist: ShortArtist) {
         router.presentSongs(for: artist, on: self)
     }
 }

@@ -6,6 +6,7 @@
 //  Copyright © 2019 ZweiGraf. All rights reserved.
 //
 
+import Combine
 import UIKit
 
 class TableViewCell: UITableViewCell {
@@ -27,6 +28,8 @@ class TableViewCell: UITableViewCell {
         subtitleLabel.text = nil
         detailImageView.image = nil
         lastLoader?.cancelSetImage(for: detailImageView)
+        // Cancel all cancellables
+        disposeBag = Set<AnyCancellable>()
     }
 
     // MARK: Subviews
@@ -60,6 +63,7 @@ class TableViewCell: UITableViewCell {
             detailImageView.heightAnchor.constraint(equalTo: safeAreaLayoutGuide.heightAnchor),
             detailImageView.widthAnchor.constraint(equalTo: detailImageView.heightAnchor),
             detailImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
+            detailImageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 54),
 
             titleLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: detailImageView.trailingAnchor, multiplier: 1),
             titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: defaultMargin),
@@ -76,10 +80,18 @@ class TableViewCell: UITableViewCell {
 
     /// ImageLoader used for loading and cancelling setting image from url.
     private var lastLoader: ImageLoader?
+    private var disposeBag = Set<AnyCancellable>()
+
     func configure(with viewModel: TableViewCellViewModel,
                    imageLoader: ImageLoader? = nil) {
-        titleLabel.text = viewModel.title
-        subtitleLabel.text = viewModel.subtitle
+        viewModel.title
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.text, on: self.titleLabel)
+            .store(in: &disposeBag)
+        viewModel.subtitle
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.text, on: self.subtitleLabel)
+            .store(in: &disposeBag)
         detailImageView.image = nil
 
         // Load and set url if needed

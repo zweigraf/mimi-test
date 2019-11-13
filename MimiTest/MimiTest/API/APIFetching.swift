@@ -10,7 +10,8 @@ import Foundation
 
 protocol APIFetching {
     func fetchTopSongs(completion: @escaping (Result<[Song], Error>) -> Void)
-    func fetchSongs(for artist: User, completion: @escaping (Result<[Song], Error>) -> Void)
+    func fetchSongs(for artist: ShortArtist, completion: @escaping (Result<[Song], Error>) -> Void)
+    func fetchFullArtist(for artist: ShortArtist, completion: @escaping (Result<FullArtist, Error>) -> Void)
 }
 
 extension APIFetching {
@@ -23,7 +24,7 @@ extension APIFetching {
 }
 
 private func map(songs: [Song]) -> [UserWithTracks] {
-    let reducedSongs = songs.reduce([User: [Song]]()) { aggr, song in
+    let reducedSongs = songs.reduce([ShortArtist: [Song]]()) { aggr, song in
         var aggrCopy = aggr
         var songs = aggrCopy[song.user] ?? []
         songs.append(song)

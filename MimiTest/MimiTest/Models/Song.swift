@@ -10,7 +10,7 @@ import Foundation
 
 struct Song: Identifiable, Codable, Equatable, Hashable {
     let id: String
-    let user: User
+    let user: ShortArtist
     let title: String
     let artworkUrl: String
     let streamUrl: String

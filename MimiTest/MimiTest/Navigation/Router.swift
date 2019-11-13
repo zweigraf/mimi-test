@@ -15,7 +15,7 @@ struct Router: Routing {
     let imageLoader: ImageLoader
     let playerService: PlayerService
 
-    func presentSongs(for artist: User, on viewController: UIViewController) {
+    func presentSongs(for artist: ShortArtist, on viewController: UIViewController) {
         let interactor = ArtistSongsInteractor(user: artist, fetcher: fetcher)
         let songsViewController = ArtistSongsViewController(interactor: interactor,
                                                             router: self,

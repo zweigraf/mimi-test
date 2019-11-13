@@ -7,7 +7,7 @@
 //
 
 struct UserWithTracks: Comparable, Equatable {
-    let user: User
+    let user: ShortArtist
     var tracks: [Song]
 
     static func < (lhs: UserWithTracks, rhs: UserWithTracks) -> Bool {

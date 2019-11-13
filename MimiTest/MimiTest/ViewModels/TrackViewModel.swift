@@ -6,6 +6,7 @@
 //  Copyright © 2019 ZweiGraf. All rights reserved.
 //
 
+import Combine
 import Foundation
 
 struct TrackViewModel {
@@ -22,14 +23,16 @@ struct TrackViewModel {
 
 // MARK: - TableViewCellViewModel
 extension TrackViewModel: TableViewCellViewModel {
-    var title: String {
-        return track.title
+    var title: AnyPublisher<String?, Never> {
+        return Just(track.title)
+            .eraseToAnyPublisher()
     }
 
-    var subtitle: String {
+    var subtitle: AnyPublisher<String?, Never> {
         let duration = track.durationInterval
         let durationString = durationFormatter.string(from: duration)
-        return "Duration: \(durationString ?? "0:00:00")"
+        return Just("Duration: \(durationString ?? "0:00:00")")
+            .eraseToAnyPublisher()
     }
 
     var imageUrl: URL? {

@@ -13,7 +13,7 @@ protocol TopArtistsInteracting: TableViewInteracting {
 }
 
 protocol TopArtistsInteractingDelegate: TableViewInteractingDelegate {
-    func presentSongs(for artist: User)
+    func presentSongs(for artist: ShortArtist)
 }
 
 class TopArtistsInteractor: TopArtistsInteracting {

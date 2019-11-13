@@ -18,10 +18,10 @@ protocol ArtistSongsInteractingDelegate: TableViewInteractingDelegate {
 
 class ArtistSongsInteractor: ArtistSongsInteracting {
     private let fetcher: APIFetching
-    private let user: User
+    private let user: ShortArtist
     private var tracks: [Song] = []
 
-    init(user: User, fetcher: APIFetching) {
+    init(user: ShortArtist, fetcher: APIFetching) {
         self.fetcher = fetcher
         self.user = user
     }
