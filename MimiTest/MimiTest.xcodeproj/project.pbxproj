@@ -17,6 +17,7 @@
 		A57E161623733E9B00A1620B /* MimiTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E161523733E9B00A1620B /* MimiTestTests.swift */; };
 		A57E162123733E9B00A1620B /* MimiTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E162023733E9B00A1620B /* MimiTestUITests.swift */; };
 		A5C57794237C2CAF0090DFD4 /* FullArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C57793237C2CAF0090DFD4 /* FullArtist.swift */; };
+		A5C57796237C42630090DFD4 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C57795237C42630090DFD4 /* PlayerViewController.swift */; };
 		A5CD738A2379747800A4557D /* DataFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD73892379747800A4557D /* DataFetching.swift */; };
 		A5CD738C2379755300A4557D /* URLSessionFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD738B2379755300A4557D /* URLSessionFetcher.swift */; };
 		A5CD738E237975F300A4557D /* APIFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CD738D237975F300A4557D /* APIFetching.swift */; };
@@ -75,6 +76,7 @@
 		A57E162023733E9B00A1620B /* MimiTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimiTestUITests.swift; sourceTree = "<group>"; };
 		A57E162223733E9B00A1620B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5C57793237C2CAF0090DFD4 /* FullArtist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullArtist.swift; sourceTree = "<group>"; };
+		A5C57795237C42630090DFD4 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		A5CD73892379747800A4557D /* DataFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetching.swift; sourceTree = "<group>"; };
 		A5CD738B2379755300A4557D /* URLSessionFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionFetcher.swift; sourceTree = "<group>"; };
 		A5CD738D237975F300A4557D /* APIFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIFetching.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 			children = (
 				A57E160223733E9A00A1620B /* TopArtistsViewController.swift */,
 				A5CD73A52379898A00A4557D /* ArtistSongsViewController.swift */,
+				A5C57795237C42630090DFD4 /* PlayerViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				A539B9372379D61C008B2762 /* TopArtistsInteracting.swift in Sources */,
 				A5CD738E237975F300A4557D /* APIFetching.swift in Sources */,
 				A5CD739B23797B7200A4557D /* ArrayExtension.swift in Sources */,
+				A5C57796237C42630090DFD4 /* PlayerViewController.swift in Sources */,
 				A5CD73AD2379A78200A4557D /* TableViewCell.swift in Sources */,
 				A539B9392379DA5D008B2762 /* PlayerService.swift in Sources */,
 				A5C57794237C2CAF0090DFD4 /* FullArtist.swift in Sources */,

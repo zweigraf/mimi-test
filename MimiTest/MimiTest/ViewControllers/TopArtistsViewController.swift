@@ -45,6 +45,15 @@ class TopArtistsViewController: UIViewController {
         ui.tableView.rowHeight = UITableView.automaticDimension
     
         ui.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Player", style: .plain, target: self, action: #selector(playerButtonTapped))
+    }
+}
+
+// MARK: - Actions
+extension TopArtistsViewController {
+    @objc func playerButtonTapped() {
+        interactor.playerButtonTapped()
     }
 }
 
@@ -93,5 +102,9 @@ extension TopArtistsViewController: TopArtistsInteractingDelegate {
 
     func presentSongs(for artist: ShortArtist) {
         router.presentSongs(for: artist, on: self)
+    }
+
+    func openPlayer() {
+        router.presentPlayer(for: nil, on: self)
     }
 }

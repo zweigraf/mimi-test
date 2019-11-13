@@ -10,9 +10,11 @@ import AVFoundation
 
 class PlayerService {
     var player = AVPlayer()
+    var song: Song?
 
     func configure(with song: Song) {
         guard let url = URL(string: song.streamUrl) else { return }
+        self.song = song
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
         player.play()

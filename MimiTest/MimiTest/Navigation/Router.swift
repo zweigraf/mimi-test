@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVKit
 
 struct Router: Routing {
     /// API Fetcher used for passing into components that need it.
@@ -42,12 +41,13 @@ struct Router: Routing {
         viewController.present(controller, animated: true)
     }
 
-    func presentPlayer(for song: Song, on viewController: UIViewController) {
-        playerService.configure(with: song)
-        let playerController = AVPlayerViewController()
-        playerController.player = playerService.player
-        viewController.present(playerController, animated: true) {
-            playerController.player?.play()
+    func presentPlayer(for song: Song?, on viewController: UIViewController) {
+        // if we have a new song, configure the player
+        if let song = song {
+            playerService.configure(with: song)
         }
+        // Anyway, open the player view
+        let playerController = PlayerViewController(playerService: playerService)
+        viewController.navigationController?.pushViewController(playerController, animated: true)
     }
 }

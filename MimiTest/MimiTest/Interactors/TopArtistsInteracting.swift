@@ -11,10 +11,12 @@ import Foundation
 
 protocol TopArtistsInteracting: TableViewInteracting {
     var delegate: TopArtistsInteractingDelegate? { get set }
+    func playerButtonTapped()
 }
 
 protocol TopArtistsInteractingDelegate: TableViewInteractingDelegate {
     func presentSongs(for artist: ShortArtist)
+    func openPlayer()
 }
 
 class TopArtistsInteractor: TopArtistsInteracting {
@@ -72,5 +74,10 @@ class TopArtistsInteractor: TopArtistsInteracting {
             fatalError("Request for non existing mapping")
         }
         delegate?.presentSongs(for: mapping.user)
+    }
+
+    // MARK: Actions
+    func playerButtonTapped() {
+        delegate?.openPlayer()
     }
 }

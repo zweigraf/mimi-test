@@ -8,7 +8,6 @@
 
 import UIKit
 
-// TODO: playerservice, interactor, button on top that goes to player
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: Dependencies
     private lazy var dataFetcher = URLSessionFetcher()

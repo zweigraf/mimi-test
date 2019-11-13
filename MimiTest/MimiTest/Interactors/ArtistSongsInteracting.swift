@@ -11,10 +11,12 @@ import Foundation
 
 protocol ArtistSongsInteracting: TableViewInteracting {
     var delegate: ArtistSongsInteractingDelegate? { get set }
+    func playerButtonTapped()
 }
 
 protocol ArtistSongsInteractingDelegate: TableViewInteractingDelegate {
     func present(song: Song)
+    func openPlayer()
 }
 
 class ArtistSongsInteractor: ArtistSongsInteracting {
@@ -74,5 +76,10 @@ class ArtistSongsInteractor: ArtistSongsInteracting {
         }
 
         delegate?.present(song: track)
+    }
+
+    // MARK: Actions
+    func playerButtonTapped() {
+        delegate?.openPlayer()
     }
 }

@@ -44,6 +44,15 @@ class ArtistSongsViewController: UIViewController {
         ui.tableView.delegate = self
         ui.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
         ui.tableView.rowHeight = UITableView.automaticDimension
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Player", style: .plain, target: self, action: #selector(playerButtonTapped))
+    }
+}
+
+// MARK: - Actions
+extension ArtistSongsViewController {
+    @objc func playerButtonTapped() {
+        interactor.playerButtonTapped()
     }
 }
 
@@ -92,5 +101,9 @@ extension ArtistSongsViewController: ArtistSongsInteractingDelegate {
 
     func present(song: Song) {
         router.presentPlayer(for: song, on: self)
+    }
+
+    func openPlayer() {
+        router.presentPlayer(for: nil, on: self)
     }
 }
