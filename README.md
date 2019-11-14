@@ -20,4 +20,7 @@ Entry point of the application is in SceneDelegate. It creates all dependencies 
 - I prefer to do all my UI in code. 
 - All dependencies are created in `SceneDelegate` and injected into places where it's needed via constructor injection.
 - Due to the Top Songs info not containing all information about the artist, esp. the track count, there is a ShortArtist and a FullArtist model. The view model that is responsible for the artist information on the top artists page then fetches the detailed information about the artist lazily.
+- The player is *very* minimalistic. It only displays the song title & artist name. Obviously it could be extended to show the current AVPlayer state, but I was out of time. And speaking from experience, handling & showing all AVPlayer states gets a bit cumbersome at times.
+- No third party code was used.
+- No optional task was implemented.
 
